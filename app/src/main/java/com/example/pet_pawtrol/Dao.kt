@@ -38,4 +38,7 @@ interface Dao {
 
     @Query("SELECT * FROM veterinars where specialization = :spec")
     fun getVeterinarToSpec(spec: String): Flow<List<Veterinars>>
+
+    @Query("SELECT * FROM veterinars where specialization = :spec1 or specialization = :spec2 ")
+    fun getVeterinarTo2Spec(spec1: String, spec2: String): Flow<List<Veterinars>>
 }

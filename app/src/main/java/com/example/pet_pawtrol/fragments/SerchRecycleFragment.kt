@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +18,6 @@ import com.example.pet_pawtrol.adapters.SearchModel
 import com.example.pet_pawtrol.databinding.FragmentSerchRecycleBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -41,37 +42,28 @@ class SerchRecycleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launchWhenStarted {
+            /*Proverca().observe(viewLifecycleOwner) { vlist ->
+                if (vlist.isEmpty()) {
+                    count=1
+                }
+            }*/
+            if (count == 1) {
+                setData()
+            }
             init()
         }
     }
 
-    suspend fun init() = coroutineScope{
-
-        val job = launch{
-            lifecycleScope.launchWhenStarted {
-                if(count == 1){
-                    setData()
-                }
-            }
-            getData()
-        }
-
-        Proverca()
-        job.join()
-        initRcView()
+    suspend fun init() = coroutineScope {
+            initRcView()
     }
 
-    private fun Proverca(){
+    private fun Proverca(): LiveData<List<SearchModel>> {
         val database = MainDb.getDb(MAIN)
-        database.getDao().getAllVeterinar().asLiveData().observe(viewLifecycleOwner){vetlist->
-            if (vetlist.size == 0){
-                count = 1
-            }
-        }
-    }
-    private fun getData(){
-        val database = MainDb.getDb(MAIN)
-        database.getDao().getAllVeterinar().asLiveData().observe(viewLifecycleOwner){vetlist->
+        val listVet = MutableLiveData<List<SearchModel>>()
+        val query = database.getDao().getAllVeterinar()
+        query.asLiveData().observe(viewLifecycleOwner){vetlist->
+            val vetirList = ArrayList<SearchModel>()
             vetlist.forEach{ veterinars ->
                 val vet = SearchModel(
                     veterinars.name,
@@ -81,9 +73,32 @@ class SerchRecycleFragment : Fragment() {
                     veterinars.price,
                     veterinars.urlProfile
                 )
-                list.add(vet)
+                vetirList.add(vet)
             }
+            listVet.value = vetirList
         }
+        return listVet
+    }
+    private fun getData(): LiveData<List<SearchModel>>{
+        val database = MainDb.getDb(MAIN)
+        val listVet = MutableLiveData<List<SearchModel>>()
+        val query = database.getDao().getAllVeterinar()
+        query.asLiveData().observe(viewLifecycleOwner){vetlist->
+            val vetirList = ArrayList<SearchModel>()
+            vetlist.forEach{ veterinars ->
+                val vet = SearchModel(
+                    veterinars.name,
+                    veterinars.phNumber,
+                    veterinars.comment,
+                    veterinars.specialization,
+                    veterinars.price,
+                    veterinars.urlProfile
+                )
+                vetirList.add(vet)
+            }
+            listVet.value = vetirList
+        }
+        return listVet
     }
 
     private suspend fun setData() = withContext(Dispatchers.IO) {
@@ -127,8 +142,10 @@ class SerchRecycleFragment : Fragment() {
     private fun initRcView() = with(binding){
         rcSerch.layoutManager = LinearLayoutManager(activity)
         adapter = SearchAdapter()
-        rcSerch.adapter = adapter
-        adapter.submitList(list)
+        getData().observe(viewLifecycleOwner){ vlist ->
+            adapter.submitList(vlist)
+            rcSerch.adapter = adapter
+        }
     }
 
     companion object {

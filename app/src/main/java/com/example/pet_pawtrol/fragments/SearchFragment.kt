@@ -17,7 +17,8 @@ class SearchFragment : Fragment() {
     private val fList = listOf(
         SerchRecycleFragment.newInstance(),
         VeterinarSearchFragment.newInstance(),
-        SerchRecycleFragment.newInstance(),
+        DogHandlerRecycleFragment.newInstance(),
+        GrymerSearchFragment.newInstance(),
         SerchRecycleFragment.newInstance(),
         SerchRecycleFragment.newInstance(),
         SerchRecycleFragment.newInstance()
@@ -26,6 +27,7 @@ class SearchFragment : Fragment() {
         "Все",
         "Ветеринар",
         "Кинолог",
+        "Грумер",
         "Дерматолог",
         "Зоопсихолог",
         "Диетолог"
