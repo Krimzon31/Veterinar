@@ -59,7 +59,7 @@ class SerchRecycleFragment : Fragment() {
                 val otz = "Отзывы: ${container.select("div[class=specialist]").select("div[class=specialist-photo-container]").select("div[class=specialist-mark]").select("div[class=specialist-mark]").select("span[class=stars-rating-text strong]").text()}"
                 val specialization = container.select("div[class=specialist]").select("div[class=specialist-top-info]").select("div[class=prof-spec-list specialist-spec-list]").select("a").text()
                 val price = "Цена: 100p"
-                val urlProfile = container.select("div[class=specialist]").attr("src") //доработать
+                val urlProfile = container.select("div[class=specialist]").select("div[class=specialist-top-info]").select("a[class=prof-name specialist-name js-specialist-card-link js-item-url js-link]").attr("href")
                 list.add(SearchModel(name, phNumber, otz, specialization, price, urlProfile))
             }
 

@@ -1,12 +1,11 @@
 package com.example.pet_pawtrol.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.asLiveData
 import com.example.pet_pawtrol.Entity.Users
 import com.example.pet_pawtrol.MAIN
@@ -42,16 +41,7 @@ class RegistrationFragment : Fragment() {
         val database = MainDb.getDb(MAIN)
         if (binding.pasEditText.text.toString() == binding.dubPasEditText.text.toString()) {
             database.getDao().getAllUser().asLiveData().observe(MAIN) { list ->
-                list.forEach { userdata ->
-                    if (userdata.email == binding.emailEditText.text.toString()) {
-                        count = 1
-                        return@forEach
-                    }
-                }
-                if(count == 1){
-                    Toast.makeText(MAIN, "Такой пользователь уже есть", Toast.LENGTH_SHORT).show()
-                }
-                if (count == 0){
+                if (list.size == 0) {
                     val user = Users(
                         null,
                         binding.firstNameEditText.text.toString(),
@@ -65,8 +55,45 @@ class RegistrationFragment : Fragment() {
                         db.getDao().insertUser(user)
                     }.start()
                     MAIN.navController.navigate(R.id.action_registrationFragment_to_autorizationFragment)
-                    Toast.makeText(MAIN, "Зарегистрирован пользователь ${binding.lastNameEditText.text.toString()}", Toast.LENGTH_SHORT
+                    Toast.makeText(
+                        MAIN,
+                        "Зарегистрирован пользователь ${binding.lastNameEditText.text.toString()}",
+                        Toast.LENGTH_SHORT
                     ).show()
+                }
+                else{
+
+
+                    list.forEach { userdata ->
+                        if (userdata.email == binding.emailEditText.text.toString()) {
+                            count = 1
+                            return@forEach
+                        }
+                    }
+                    if (count == 1) {
+                        Toast.makeText(MAIN, "Такой пользователь уже есть", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                    if (count == 0) {
+                        val user = Users(
+                            null,
+                            binding.firstNameEditText.text.toString(),
+                            binding.lastNameEditText.text.toString(),
+                            binding.phoneNumberEditText.text.toString(),
+                            binding.emailEditText.text.toString(),
+                            binding.loginEditText.text.toString(),
+                            binding.pasEditText.text.toString()
+                        )
+                        Thread {
+                            db.getDao().insertUser(user)
+                        }.start()
+                        MAIN.navController.navigate(R.id.action_registrationFragment_to_autorizationFragment)
+                        Toast.makeText(
+                            MAIN,
+                            "Зарегистрирован пользователь ${binding.lastNameEditText.text.toString()}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         }
