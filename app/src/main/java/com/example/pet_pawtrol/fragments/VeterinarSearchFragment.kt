@@ -13,7 +13,7 @@ import com.example.pet_pawtrol.MAIN
 import com.example.pet_pawtrol.MainDb
 import com.example.pet_pawtrol.adapters.SearchAdapter
 import com.example.pet_pawtrol.adapters.SearchModel
-import com.example.pet_pawtrol.databinding.FragmentSerchRecycleBinding
+import com.example.pet_pawtrol.databinding.FragmentVeterinarSearchBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
@@ -23,18 +23,16 @@ import okhttp3.Request
 import org.jsoup.Jsoup
 import java.io.IOException
 
-class SerchRecycleFragment : Fragment() {
-
-    private lateinit var binding: FragmentSerchRecycleBinding
+class VeterinarSearchFragment : Fragment() {
+    private lateinit var binding: FragmentVeterinarSearchBinding
     private lateinit var adapter: SearchAdapter
     var list = arrayListOf<SearchModel>()
     var count = 0
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentSerchRecycleBinding.inflate(inflater, container,false)
+    ): View{
+        binding = FragmentVeterinarSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -71,7 +69,7 @@ class SerchRecycleFragment : Fragment() {
     }
     private fun getData(){
         val database = MainDb.getDb(MAIN)
-        database.getDao().getAllVeterinar().asLiveData().observe(viewLifecycleOwner){vetlist->
+        database.getDao().getVeterinarToSpec("Ветеринар").asLiveData().observe(viewLifecycleOwner){vetlist->
             vetlist.forEach{ veterinars ->
                 val vet = SearchModel(
                     veterinars.name,
@@ -85,7 +83,6 @@ class SerchRecycleFragment : Fragment() {
             }
         }
     }
-
     private suspend fun setData() = withContext(Dispatchers.IO) {
         val database = MainDb.getDb(MAIN)
         val url = "https://zoon.ru/penza/p-veterinar/"
@@ -108,6 +105,7 @@ class SerchRecycleFragment : Fragment() {
                 val specialization = container.select("div[class=specialist]").select("div[class=specialist-top-info]").select("div[class=prof-spec-list specialist-spec-list]").select("a").text()
                 val price = "Цена: 100p"
                 val urlProfile = container.select("div[class=specialist]").select("div[class=specialist-top-info]").select("a[class=prof-name specialist-name js-specialist-card-link js-item-url js-link]").attr("href")
+                list.add(SearchModel(name, phNumber, comment, specialization, price, urlProfile))
 
                 val vet = Veterinars(
                     null,
@@ -118,21 +116,20 @@ class SerchRecycleFragment : Fragment() {
                     price,
                     urlProfile
                 )
-
                 database.getDao().insertVeterinar(vet)
             }
         }
     }
 
     private fun initRcView() = with(binding){
-        rcSerch.layoutManager = LinearLayoutManager(activity)
+        vetRecycleView.layoutManager = LinearLayoutManager(activity)
         adapter = SearchAdapter()
-        rcSerch.adapter = adapter
+        vetRecycleView.adapter = adapter
         adapter.submitList(list)
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = SerchRecycleFragment()
+        fun newInstance() = VeterinarSearchFragment()
     }
 }

@@ -6,8 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.pet_pawtrol.Entity.Pets
 import com.example.pet_pawtrol.Entity.Users
+import com.example.pet_pawtrol.Entity.Veterinars
 
-@Database(entities = [Users::class, Pets::class], version = 2)
+@Database(entities = [Users::class, Pets::class, Veterinars::class], version = 2)
 abstract class MainDb : RoomDatabase() {
     abstract fun getDao(): Dao
     companion object{

@@ -16,12 +16,14 @@ class SearchFragment : Fragment() {
 
     private val fList = listOf(
         SerchRecycleFragment.newInstance(),
+        VeterinarSearchFragment.newInstance(),
         SerchRecycleFragment.newInstance(),
         SerchRecycleFragment.newInstance(),
         SerchRecycleFragment.newInstance(),
         SerchRecycleFragment.newInstance()
     )
     private val tList = listOf(
+        "Все",
         "Ветеринар",
         "Кинолог",
         "Дерматолог",

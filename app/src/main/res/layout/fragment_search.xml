@@ -73,7 +73,7 @@
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tLSearch"
-                android:layout_width="534dp"
+                android:layout_width="600dp"
                 android:layout_height="49dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -82,6 +82,11 @@
                 app:tabIconTint="@color/white"
                 app:tabIndicatorColor="@color/white"
                 app:tabTextColor="@color/design_default_color_secondary_variant">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Все" />
 
                 <com.google.android.material.tabs.TabItem
 
@@ -99,7 +104,9 @@
 
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Дерматолог" />
+                    android:text="Дерматолог"
+                    tools:layout_editor_absoluteX="278dp"
+                    tools:layout_editor_absoluteY="0dp" />
 
                 <com.google.android.material.tabs.TabItem
 

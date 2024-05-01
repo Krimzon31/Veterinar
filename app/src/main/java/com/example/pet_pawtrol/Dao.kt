@@ -1,13 +1,12 @@
 package com.example.pet_pawtrol
 
-import android.provider.ContactsContract.CommonDataKinds.Nickname
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.pet_pawtrol.Entity.Pets
 import com.example.pet_pawtrol.Entity.Users
+import com.example.pet_pawtrol.Entity.Veterinars
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -29,5 +28,14 @@ interface Dao {
     fun getPetsId(id : Int, nickname: String, view: String, poroda: String): Int
 
     @Delete
-    fun deletePet(pet: Pets);
+    fun deletePet(pet: Pets)
+
+    @Insert
+    fun insertVeterinar(veterinars: Veterinars)
+
+    @Query("SELECT * FROM veterinars")
+    fun getAllVeterinar(): Flow<List<Veterinars>>
+
+    @Query("SELECT * FROM veterinars where specialization = :spec")
+    fun getVeterinarToSpec(spec: String): Flow<List<Veterinars>>
 }
