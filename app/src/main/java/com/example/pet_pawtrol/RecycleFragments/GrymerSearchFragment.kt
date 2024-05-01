@@ -1,4 +1,4 @@
-package com.example.pet_pawtrol.fragments
+package com.example.pet_pawtrol.RecycleFragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,19 +14,19 @@ import com.example.pet_pawtrol.MAIN
 import com.example.pet_pawtrol.MainDb
 import com.example.pet_pawtrol.adapters.SearchAdapter
 import com.example.pet_pawtrol.adapters.SearchModel
-import com.example.pet_pawtrol.databinding.FragmentDogHandlerRecycleBinding
+import com.example.pet_pawtrol.databinding.FragmentGrymerSearchBinding
 import kotlinx.coroutines.coroutineScope
 
-class DogHandlerRecycleFragment : Fragment() {
+class GrymerSearchFragment : Fragment() {
 
-    private lateinit var binding: FragmentDogHandlerRecycleBinding
+    private lateinit var binding: FragmentGrymerSearchBinding
     private lateinit var adapter: SearchAdapter
     var list = arrayListOf<SearchModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View{
-        binding = FragmentDogHandlerRecycleBinding.inflate(inflater, container, false)
+        binding = FragmentGrymerSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -43,7 +43,7 @@ class DogHandlerRecycleFragment : Fragment() {
     private fun getData(): LiveData<List<SearchModel>> {
         val database = MainDb.getDb(MAIN)
         val listVet = MutableLiveData<List<SearchModel>>()
-        val query = database.getDao().getVeterinarTo2Spec("Кинолог", "Выгульщик собак")
+        val query = database.getDao().getVeterinarToSpec("Грумер")
         query.asLiveData().observe(viewLifecycleOwner){vetlist->
             val vetirList = ArrayList<SearchModel>()
             vetlist.forEach{ veterinars ->
@@ -62,16 +62,16 @@ class DogHandlerRecycleFragment : Fragment() {
         return listVet
     }
     private fun initRcView() = with(binding){
-        rcDogHandler.layoutManager = LinearLayoutManager(activity)
+        rcGrymmer.layoutManager = LinearLayoutManager(activity)
         adapter = SearchAdapter()
         getData().observe(viewLifecycleOwner){ vlist ->
             adapter.submitList(vlist)
-            rcDogHandler.adapter = adapter
+            rcGrymmer.adapter = adapter
         }
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = DogHandlerRecycleFragment()
+        fun newInstance() = GrymerSearchFragment()
     }
 }

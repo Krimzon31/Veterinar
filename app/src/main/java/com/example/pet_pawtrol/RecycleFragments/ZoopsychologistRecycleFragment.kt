@@ -1,4 +1,4 @@
-package com.example.pet_pawtrol.fragments
+package com.example.pet_pawtrol.RecycleFragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,19 +14,19 @@ import com.example.pet_pawtrol.MAIN
 import com.example.pet_pawtrol.MainDb
 import com.example.pet_pawtrol.adapters.SearchAdapter
 import com.example.pet_pawtrol.adapters.SearchModel
-import com.example.pet_pawtrol.databinding.FragmentGrymerSearchBinding
+import com.example.pet_pawtrol.databinding.FragmentZoopsychologistRecycleBinding
 import kotlinx.coroutines.coroutineScope
 
-class GrymerSearchFragment : Fragment() {
+class ZoopsychologistRecycleFragment : Fragment() {
 
-    private lateinit var binding: FragmentGrymerSearchBinding
+    private lateinit var binding: FragmentZoopsychologistRecycleBinding
     private lateinit var adapter: SearchAdapter
     var list = arrayListOf<SearchModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View{
-        binding = FragmentGrymerSearchBinding.inflate(inflater, container, false)
+        binding = FragmentZoopsychologistRecycleBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -43,7 +43,7 @@ class GrymerSearchFragment : Fragment() {
     private fun getData(): LiveData<List<SearchModel>> {
         val database = MainDb.getDb(MAIN)
         val listVet = MutableLiveData<List<SearchModel>>()
-        val query = database.getDao().getVeterinarToSpec("Грумер")
+        val query = database.getDao().getVeterinarToSpec("Зоопсихолог")
         query.asLiveData().observe(viewLifecycleOwner){vetlist->
             val vetirList = ArrayList<SearchModel>()
             vetlist.forEach{ veterinars ->
@@ -62,16 +62,15 @@ class GrymerSearchFragment : Fragment() {
         return listVet
     }
     private fun initRcView() = with(binding){
-        rcGrymmer.layoutManager = LinearLayoutManager(activity)
+        rcZoopsychologist.layoutManager = LinearLayoutManager(activity)
         adapter = SearchAdapter()
         getData().observe(viewLifecycleOwner){ vlist ->
             adapter.submitList(vlist)
-            rcGrymmer.adapter = adapter
+            rcZoopsychologist.adapter = adapter
         }
     }
-
     companion object {
         @JvmStatic
-        fun newInstance() = GrymerSearchFragment()
+        fun newInstance() = ZoopsychologistRecycleFragment()
     }
 }

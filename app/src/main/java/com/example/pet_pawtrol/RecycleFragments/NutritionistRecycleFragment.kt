@@ -1,4 +1,4 @@
-package com.example.pet_pawtrol.fragments
+package com.example.pet_pawtrol.RecycleFragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,22 +14,24 @@ import com.example.pet_pawtrol.MAIN
 import com.example.pet_pawtrol.MainDb
 import com.example.pet_pawtrol.adapters.SearchAdapter
 import com.example.pet_pawtrol.adapters.SearchModel
-import com.example.pet_pawtrol.databinding.FragmentVeterinarSearchBinding
+import com.example.pet_pawtrol.databinding.FragmentNutritionistRecycleBinding
 import kotlinx.coroutines.coroutineScope
 
-class VeterinarSearchFragment : Fragment() {
-    private lateinit var binding: FragmentVeterinarSearchBinding
+class NutritionistRecycleFragment : Fragment() {
+
+    private lateinit var binding: FragmentNutritionistRecycleBinding
     private lateinit var adapter: SearchAdapter
     var list = arrayListOf<SearchModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View{
-        binding = FragmentVeterinarSearchBinding.inflate(inflater, container, false)
+        binding = FragmentNutritionistRecycleBinding.inflate(inflater, container,  false)
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         super.onViewCreated(view, savedInstanceState)
         lifecycleScope.launchWhenStarted {
             init()
@@ -42,7 +44,7 @@ class VeterinarSearchFragment : Fragment() {
     private fun getData(): LiveData<List<SearchModel>> {
         val database = MainDb.getDb(MAIN)
         val listVet = MutableLiveData<List<SearchModel>>()
-        val query = database.getDao().getVeterinarToSpec("Ветеринар")
+        val query = database.getDao().getVeterinarToSpec("Диетолог")
         query.asLiveData().observe(viewLifecycleOwner){vetlist->
             val vetirList = ArrayList<SearchModel>()
             vetlist.forEach{ veterinars ->
@@ -60,18 +62,17 @@ class VeterinarSearchFragment : Fragment() {
         }
         return listVet
     }
-
     private fun initRcView() = with(binding){
-        vetRecycleView.layoutManager = LinearLayoutManager(activity)
+        rcNutritionist.layoutManager = LinearLayoutManager(activity)
         adapter = SearchAdapter()
         getData().observe(viewLifecycleOwner){ vlist ->
             adapter.submitList(vlist)
-            vetRecycleView.adapter = adapter
+            rcNutritionist.adapter = adapter
         }
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = VeterinarSearchFragment()
+        fun newInstance() = NutritionistRecycleFragment()
     }
 }

@@ -73,7 +73,7 @@
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tLSearch"
-                android:layout_width="680dp"
+                android:layout_width="690dp"
                 android:layout_height="49dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

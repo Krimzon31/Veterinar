@@ -8,6 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.pet_pawtrol.MAIN
 import com.example.pet_pawtrol.R
+import com.example.pet_pawtrol.RecycleFragments.DermatologistRecycleFragment
+import com.example.pet_pawtrol.RecycleFragments.DogHandlerRecycleFragment
+import com.example.pet_pawtrol.RecycleFragments.GrymerSearchFragment
+import com.example.pet_pawtrol.RecycleFragments.NutritionistRecycleFragment
+import com.example.pet_pawtrol.RecycleFragments.SerchRecycleFragment
+import com.example.pet_pawtrol.RecycleFragments.VeterinarSearchFragment
+import com.example.pet_pawtrol.RecycleFragments.ZoopsychologistRecycleFragment
 import com.example.pet_pawtrol.adapters.VpAdapter
 import com.example.pet_pawtrol.databinding.FragmentSearchBinding
 import com.google.android.material.tabs.TabLayoutMediator
@@ -19,9 +26,9 @@ class SearchFragment : Fragment() {
         VeterinarSearchFragment.newInstance(),
         DogHandlerRecycleFragment.newInstance(),
         GrymerSearchFragment.newInstance(),
-        SerchRecycleFragment.newInstance(),
-        SerchRecycleFragment.newInstance(),
-        SerchRecycleFragment.newInstance()
+        DermatologistRecycleFragment.newInstance(),
+        ZoopsychologistRecycleFragment.newInstance(),
+        NutritionistRecycleFragment.newInstance()
     )
     private val tList = listOf(
         "Все",
