@@ -26,35 +26,24 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:text="Ближайщая дата: 02.04.2024"
-            android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="@+id/tvName"
-            app:layout_constraintTop_toBottomOf="@+id/tvName" />
-
-        <TextView
             android:id="@+id/tvOtz"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="40dp"
             android:text="Отзывы: 4,7"
             android:textColor="@color/black"
-            app:layout_constraintStart_toStartOf="@+id/tvDate"
-            app:layout_constraintTop_toBottomOf="@+id/tvDate" />
+            app:layout_constraintStart_toStartOf="@+id/tvName"
+            app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
         <TextView
             android:id="@+id/tvprice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="15dp"
             android:text="Цена: 1000 р"
             android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/tvOtz"
-            app:layout_constraintTop_toBottomOf="@+id/tvDate" />
+            tools:layout_editor_absoluteY="74dp" />
 
         <Button
             android:id="@+id/moreInfBt"

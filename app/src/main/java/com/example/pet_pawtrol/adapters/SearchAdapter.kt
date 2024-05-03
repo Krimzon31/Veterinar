@@ -23,7 +23,7 @@ class SearchAdapter: ListAdapter<SearchModel, SearchAdapter.Holder>(Comparator()
 
         fun bind(item: SearchModel) = with(binding){
             tvName.text = item.name
-            tvDate.text = item.ph_number
+            //tvDate.text = item.ph_number
             tvprice.text = item.price
             tvOtz.text = item.otz
             moreInfBt.setOnClickListener{
