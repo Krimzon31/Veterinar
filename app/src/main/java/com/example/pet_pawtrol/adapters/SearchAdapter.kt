@@ -1,8 +1,10 @@
 package com.example.pet_pawtrol.adapters
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,12 +15,21 @@ class SearchAdapter: ListAdapter<SearchModel, SearchAdapter.Holder>(Comparator()
 
     class Holder(view: View) : RecyclerView.ViewHolder(view){
         val binding = SerchItemBinding.bind(view)
+        lateinit var bundle: Bundle
+
+        init {
+            bundle = Bundle()
+        }
 
         fun bind(item: SearchModel) = with(binding){
             tvName.text = item.name
             tvDate.text = item.ph_number
             tvprice.text = item.price
             tvOtz.text = item.otz
+            moreInfBt.setOnClickListener{
+                bundle.putString("urlProfile", item.urlProfile)
+                findNavController(it).navigate(R.id.action_searchFragment_to_moreInformationFragment, bundle)
+            }
         }
     }
 

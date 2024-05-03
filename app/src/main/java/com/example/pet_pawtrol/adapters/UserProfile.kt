@@ -1,7 +1,5 @@
 package com.example.pet_pawtrol.adapters
 
-
-
 data class UserProfile(
     var firstname : String,
     var lastname : String,

@@ -56,9 +56,9 @@
             app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
         <Button
-            android:id="@+id/moreBt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/moreInfBt"
+            android:layout_width="136dp"
+            android:layout_height="49dp"
             android:layout_marginTop="1dp"
             android:layout_marginEnd="15dp"
             android:backgroundTint="@color/pets"
@@ -69,13 +69,13 @@
 
         <Button
             android:id="@+id/klinikBt"
-            android:layout_width="122dp"
-            android:layout_height="51dp"
+            android:layout_width="136dp"
+            android:layout_height="49dp"
             android:layout_marginTop="5dp"
             android:backgroundTint="@color/pets"
-            android:text="Клиника"
+            android:text="Записаться"
             app:cornerRadius="10dp"
-            app:layout_constraintEnd_toEndOf="@+id/moreBt"
-            app:layout_constraintTop_toBottomOf="@+id/moreBt" />
+            app:layout_constraintEnd_toEndOf="@+id/moreInfBt"
+            app:layout_constraintTop_toBottomOf="@+id/moreInfBt" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
