@@ -37,19 +37,19 @@ class RegistrationFragment : Fragment() {
             registrationUser()
         }
     }
-    fun registrationUser() {
+    private fun registrationUser() {
         val database = MainDb.getDb(MAIN)
-        if (binding.pasEditText.text.toString() == binding.dubPasEditText.text.toString()) {
+        if (binding.pasEditText.text.toString().trim() == binding.dubPasEditText.text.toString().trim()) {
             database.getDao().getAllUser().asLiveData().observe(MAIN) { list ->
-                if (list.size == 0) {
+                if (list.isEmpty()) {
                     val user = Users(
                         null,
-                        binding.firstNameEditText.text.toString(),
-                        binding.lastNameEditText.text.toString(),
-                        binding.phoneNumberEditText.text.toString(),
-                        binding.emailEditText.text.toString(),
-                        binding.loginEditText.text.toString(),
-                        binding.pasEditText.text.toString()
+                        binding.firstNameEditText.text.toString().trim(),
+                        binding.lastNameEditText.text.toString().trim(),
+                        binding.phoneNumberEditText.text.toString().trim(),
+                        binding.emailEditText.text.toString().trim(),
+                        binding.loginEditText.text.toString().trim(),
+                        binding.pasEditText.text.toString().trim()
                     )
                     Thread {
                         db.getDao().insertUser(user)
@@ -65,7 +65,7 @@ class RegistrationFragment : Fragment() {
 
 
                     list.forEach { userdata ->
-                        if (userdata.email == binding.emailEditText.text.toString()) {
+                        if (userdata.email == binding.emailEditText.text.toString().trim()) {
                             count = 1
                             return@forEach
                         }

@@ -1,11 +1,11 @@
 package com.example.pet_pawtrol.fragments
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.asLiveData
 import com.example.pet_pawtrol.MAIN
 import com.example.pet_pawtrol.MainDb
@@ -34,19 +34,19 @@ class AutorizationFragment : Fragment(){
         }
 
         binding.enterButt.setOnClickListener{
-            Autorization()
+            autorization()
         }
     }
 
-    private fun Autorization(){
+    private fun autorization(){
         val database = MainDb.getDb(MAIN)
         database.getDao().getAllUser().asLiveData().observe(MAIN){ list ->
 
             list.forEach{user ->
 
-                if(binding.loginEditText.text.toString() == user.login){
+                if(binding.loginEditText.text.toString().trim() == user.login){
 
-                    if(binding.pasEditText.text.toString() == user.password){
+                    if(binding.pasEditText.text.toString().trim() == user.password){
                         val userString = """
                                         {
                                             "user":{

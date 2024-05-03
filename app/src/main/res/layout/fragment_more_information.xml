@@ -80,15 +80,12 @@
 
             <TextView
                 android:id="@+id/tvInformation"
-                android:layout_width="311dp"
-                android:layout_height="348dp"
-                android:layout_marginStart="170dp"
-                android:layout_marginTop="88dp"
-                android:layout_marginEnd="170dp"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
                 android:text="Описание"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvStag" />
+                app:layout_constraintStart_toStartOf="@+id/PhotoImgView"
+                app:layout_constraintTop_toBottomOf="@+id/tvPrice" />
 
             <Button
                 android:id="@+id/zapBut"
@@ -111,15 +108,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
             <TextView
-                android:id="@+id/tvPhoneNumber"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="+79008097568"
-                app:layout_constraintStart_toStartOf="@+id/constraintLayout2"
-                app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />
-
-            <TextView
                 android:id="@+id/tvPrice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -130,38 +118,52 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraintLayout2"
-                android:layout_width="311dp"
+                android:layout_width="350dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintStart_toStartOf="@+id/tvInformation"
                 app:layout_constraintTop_toBottomOf="@+id/tvInformation">
 
                 <TextView
-                    android:id="@+id/tvClinick"
+                    android:id="@+id/workLocation"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="125dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="125dp"
+                    android:text="Место работы:"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvClinick"
+                    android:layout_width="207dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
                     android:text="Зоо"
                     app:layout_constraintStart_toEndOf="@+id/ClinicImg"
                     app:layout_constraintTop_toTopOf="@+id/ClinicImg" />
 
                 <ImageView
                     android:id="@+id/ClinicImg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
                     android:src="@drawable/ic_launcher_foreground"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/workLocation"
+                    app:layout_constraintVertical_bias="0.269" />
 
                 <TextView
                     android:id="@+id/tvAdresss"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="30dp"
+                    android:singleLine="false"
                     android:text="адрес"
-                    app:layout_constraintStart_toEndOf="@+id/ClinicImg"
+                    app:layout_constraintStart_toStartOf="@+id/ClinicImg"
                     app:layout_constraintTop_toBottomOf="@+id/tvClinickComment" />
 
                 <TextView
@@ -174,16 +176,6 @@
                     app:layout_constraintStart_toEndOf="@+id/ClinicImg"
                     app:layout_constraintTop_toBottomOf="@+id/tvClinick" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <TextView
-                android:id="@+id/workLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="105dp"
-                android:layout_marginTop="15dp"
-                android:text="Место работы:"
-                app:layout_constraintStart_toStartOf="@+id/tvInformation"
-                app:layout_constraintTop_toBottomOf="@+id/tvInformation" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
