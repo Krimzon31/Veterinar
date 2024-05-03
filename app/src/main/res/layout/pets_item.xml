@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:backgroundTint="@color/pets"
+    android:backgroundTint="@color/backPanelColor"
     app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="63dp">
+        android:layout_height="63dp"
+        android:backgroundTint="@color/backPanelColor">
 
         <TextView
             android:id="@+id/tvItem_nickname"
@@ -20,6 +21,7 @@
             android:layout_marginBottom="10dp"
             android:text="Вася"
             android:textAlignment="center"
+            android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -34,6 +36,7 @@
             android:layout_marginBottom="10dp"
             android:text="кошка"
             android:textAlignment="center"
+            android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tvItem_nickname"
@@ -47,6 +50,7 @@
             android:layout_marginBottom="10dp"
             android:text="шотландская"
             android:textAlignment="center"
+            android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/tv_Item_view"

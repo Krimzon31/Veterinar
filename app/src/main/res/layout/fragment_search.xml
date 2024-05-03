@@ -6,6 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".fragments.SearchFragment">
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="410dp"
+        android:layout_height="1033dp"
+        android:background="@color/backColor"
+        android:backgroundTint="@color/backColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@color/backColor" />
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
         android:layout_width="match_parent"
@@ -63,25 +73,28 @@
         android:id="@+id/horizontalScrollView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/backColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/backColor"
             android:orientation="vertical">
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tLSearch"
                 android:layout_width="690dp"
                 android:layout_height="49dp"
+                android:background="@color/tableConColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tabIconTint="@color/white"
                 app:tabIndicatorColor="@color/white"
-                app:tabTextColor="@color/design_default_color_secondary_variant">
+                app:tabTextColor="@color/black">
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
@@ -132,6 +145,7 @@
         android:id="@+id/vpList"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:backgroundTint="@color/backColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -4,19 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:backgroundTint="@color/backColor"
     tools:context=".fragments.MoreInformationFragment">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="410dp"
+        android:layout_height="1033dp"
+        android:background="@color/backColor"
+        android:backgroundTint="@color/backColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@color/backColor" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="409dp"
         android:layout_height="60dp"
+        android:backgroundTint="@color/cardColor"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:backgroundTint="@color/cardColor">
 
             <ImageButton
                 android:id="@+id/BackImBut"
@@ -34,6 +47,7 @@
     </androidx.cardview.widget.CardView>
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="409dp"
         android:layout_height="669dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,6 +60,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:backgroundTint="@color/backColor"
             android:orientation="vertical">
 
             <ImageView
@@ -92,6 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:backgroundTint="@color/buttonColor"
                 android:text="Записаться"
                 app:cornerRadius="10dp"
                 app:layout_constraintEnd_toEndOf="@+id/constraintLayout2"

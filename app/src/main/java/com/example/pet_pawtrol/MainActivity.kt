@@ -2,8 +2,9 @@ package com.example.pet_pawtrol
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import com.example.pet_pawtrol.databinding.ActivityMainBinding
@@ -21,6 +22,8 @@ class MainActivity : AppCompatActivity() {
         navController = Navigation.findNavController(this, R.id.nav_host_fragment)
 
         MAIN = this
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
     }
 

@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="3dp"
-    android:backgroundTint="@color/cardColorItem"
+    android:backgroundTint="@color/backPanelColor"
     app:cardCornerRadius="15dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp">
+        android:layout_marginTop="3dp"
+        android:backgroundTint="@color/backPanelColor">
 
         <TextView
             android:id="@+id/tvName"
@@ -20,7 +21,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="15dp"
             android:text="Иванов"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -30,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:text="Ближайщая дата: 02.04.2024"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@+id/tvName"
             app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
@@ -40,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:text="Отзывы: 4,7"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             app:layout_constraintStart_toStartOf="@+id/tvDate"
             app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
@@ -51,7 +52,7 @@
             android:layout_marginStart="30dp"
             android:layout_marginTop="15dp"
             android:text="Цена: 1000 р"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/tvOtz"
             app:layout_constraintTop_toBottomOf="@+id/tvDate" />
 
@@ -61,7 +62,7 @@
             android:layout_height="49dp"
             android:layout_marginTop="1dp"
             android:layout_marginEnd="15dp"
-            android:backgroundTint="@color/pets"
+            android:backgroundTint="@color/buttonColor"
             android:text="Подробнее"
             app:cornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -72,7 +73,7 @@
             android:layout_width="136dp"
             android:layout_height="49dp"
             android:layout_marginTop="5dp"
-            android:backgroundTint="@color/pets"
+            android:backgroundTint="@color/buttonColor"
             android:text="Записаться"
             app:cornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="@+id/moreInfBt"

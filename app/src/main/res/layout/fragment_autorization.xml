@@ -4,7 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="@color/backColor"
     tools:context=".fragments.AutorizationFragment">
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="410dp"
+        android:layout_height="1033dp"
+        android:background="@color/backColor"
+        android:backgroundTint="@color/backColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@color/backColor"
+        tools:layout_editor_absoluteY="-118dp" />
 
     <EditText
         android:id="@+id/loginEditText"
@@ -24,7 +37,7 @@
         android:layout_height="52dp"
         android:layout_marginTop="20dp"
         android:background="@null"
-        android:backgroundTint="@color/design_default_color_secondary"
+        android:backgroundTint="@color/buttonColor"
         android:text="Регистрация"
         android:textSize="14sp"
         app:cornerRadius="10dp"
@@ -37,7 +50,7 @@
         android:layout_height="52dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="50dp"
-        android:backgroundTint="@color/design_default_color_secondary"
+        android:backgroundTint="@color/buttonColor"
         android:text="Вход"
         android:textSize="20sp"
         app:cornerRadius="10dp"
