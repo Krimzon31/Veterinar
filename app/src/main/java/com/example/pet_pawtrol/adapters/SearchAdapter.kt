@@ -30,6 +30,10 @@ class SearchAdapter: ListAdapter<SearchModel, SearchAdapter.Holder>(Comparator()
                 bundle.putString("urlProfile", item.urlProfile)
                 findNavController(it).navigate(R.id.action_searchFragment_to_moreInformationFragment, bundle)
             }
+            zapBut.setOnClickListener{
+                bundle.putString("veterinarName", item.name)
+                findNavController(it).navigate(R.id.action_searchFragment_to_makeAnAppointmentFragment, bundle)
+            }
         }
     }
 

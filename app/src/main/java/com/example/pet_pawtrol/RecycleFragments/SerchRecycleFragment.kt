@@ -29,7 +29,6 @@ class SerchRecycleFragment : Fragment() {
     private lateinit var binding: FragmentSerchRecycleBinding
     private lateinit var adapter: SearchAdapter
     var list = arrayListOf<SearchModel>()
-    var count = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,15 +40,8 @@ class SerchRecycleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
         super.onViewCreated(view, savedInstanceState)
+        Proverca()
         lifecycleScope.launchWhenStarted {
-            /*Proverca().observe(viewLifecycleOwner) { vlist ->
-                if (vlist.isEmpty()) {
-                    count=1
-                }
-            }*/
-            if (count == 1) {
-                setData()
-            }
             init()
         }
     }
@@ -58,26 +50,17 @@ class SerchRecycleFragment : Fragment() {
             initRcView()
     }
 
-    private fun Proverca(): LiveData<List<SearchModel>> {
+    private fun Proverca(){
         val database = MainDb.getDb(MAIN)
-        val listVet = MutableLiveData<List<SearchModel>>()
-        val query = database.getDao().getAllVeterinar()
-        query.asLiveData().observe(viewLifecycleOwner){vetlist->
-            val vetirList = ArrayList<SearchModel>()
-            vetlist.forEach{ veterinars ->
-                val vet = SearchModel(
-                    veterinars.name,
-                    veterinars.phNumber,
-                    veterinars.comment,
-                    veterinars.specialization,
-                    veterinars.price,
-                    veterinars.urlProfile
-                )
-                vetirList.add(vet)
+        val rowCount = database.getDao().countTableRowsVeterinars()
+        rowCount.observeForever { count ->
+            if (count == 0) {
+                lifecycleScope.launchWhenStarted {
+                    setData()
+                }
+                return@observeForever
             }
-            listVet.value = vetirList
         }
-        return listVet
     }
     private fun getData(): LiveData<List<SearchModel>>{
         val database = MainDb.getDb(MAIN)

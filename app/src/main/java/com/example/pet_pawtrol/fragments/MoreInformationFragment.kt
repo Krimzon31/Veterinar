@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import com.example.pet_pawtrol.MAIN
 import com.example.pet_pawtrol.R
 import com.example.pet_pawtrol.databinding.FragmentMoreInformationBinding
@@ -23,6 +24,11 @@ import java.io.IOException
 class MoreInformationFragment : Fragment() {
 
     private lateinit var binding: FragmentMoreInformationBinding
+    lateinit var bundle: Bundle
+
+    init {
+        bundle = Bundle()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +48,10 @@ class MoreInformationFragment : Fragment() {
         }
         binding.BackImBut.setOnClickListener {
             MAIN.navController.navigate(R.id.action_moreInformationFragment_to_searchFragment)
+        }
+        binding.zapBut.setOnClickListener{
+            bundle.putString("veterinarName", binding.tvName.text.toString())
+            Navigation.findNavController(it).navigate(R.id.action_moreInformationFragment_to_makeAnAppointmentFragment, bundle)
         }
     }
     @SuppressLint("SetTextI18n")

@@ -29,19 +29,41 @@ class AddPetsProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val id = arguments?.getInt("id_user")
-        binding.addPetBut.setOnClickListener{
-            val pet = Pets(
-                null,
-                binding.etNickname.text.toString(),
-                binding.etPetView.text.toString(),
-                binding.etPoroda.text.toString(),
-                id!!
-            )
-            Thread {
-                db.getDao().insertPet(pet)
-            }.start()
-            MAIN.navController.navigate(R.id.action_addPetsProfileFragment_to_profileFragment)
-            Toast.makeText(MAIN, "Питомец: ${binding.etNickname.text} добавлен", Toast.LENGTH_SHORT).show()
+        binding.addPetBut.setOnClickListener {
+            if (binding.etNickname.text.toString() == "" || binding.etPetView.text.toString() == "" || binding.etPoroda.text.toString() == "") {
+                Toast.makeText(
+                    MAIN,
+                    "Все поля должны быть заполнены",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            else {
+                val pattern = Regex(".*[/^1-9\\d!@#\$%^&*()_\\-=+\\\\|[\\]{}:;.,<>?]+\$/].*")
+                if (pattern.matches(binding.etNickname.text.toString()) || pattern.matches(binding.etPetView.text.toString()) || pattern.matches(binding.etPoroda.text.toString())) {
+                    Toast.makeText(
+                        context,
+                        "Были введены недопустимые символы",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    val pet = Pets(
+                        null,
+                        binding.etNickname.text.toString(),
+                        binding.etPetView.text.toString(),
+                        binding.etPoroda.text.toString(),
+                        id!!
+                    )
+                    Thread {
+                        db.getDao().insertPet(pet)
+                    }.start()
+                    MAIN.navController.navigate(R.id.action_addPetsProfileFragment_to_profileFragment)
+                    Toast.makeText(
+                        MAIN,
+                        "Питомец: ${binding.etNickname.text} добавлен",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
         binding.backImBt.setOnClickListener {
             MAIN.navController.navigate(R.id.action_addPetsProfileFragment_to_profileFragment)

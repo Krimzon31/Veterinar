@@ -1,9 +1,11 @@
 package com.example.pet_pawtrol
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import com.example.pet_pawtrol.Entity.MakeAnAppointment
 import com.example.pet_pawtrol.Entity.Pets
 import com.example.pet_pawtrol.Entity.Users
 import com.example.pet_pawtrol.Entity.Veterinars
@@ -36,9 +38,18 @@ interface Dao {
     @Query("SELECT * FROM veterinars")
     fun getAllVeterinar(): Flow<List<Veterinars>>
 
+    @Query("SELECT COUNT(*) FROM veterinars")
+    fun countTableRowsVeterinars(): LiveData<Int>
+
     @Query("SELECT * FROM veterinars where specialization = :spec")
     fun getVeterinarToSpec(spec: String): Flow<List<Veterinars>>
 
     @Query("SELECT * FROM veterinars where specialization = :spec1 or specialization = :spec2 ")
     fun getVeterinarTo2Spec(spec1: String, spec2: String): Flow<List<Veterinars>>
+
+    @Insert
+    fun insertAppointment(appointment: MakeAnAppointment)
+
+    @Query("SELECT * FROM make_an_appointment where id_user = :id_user")
+    fun getAppointment(id_user: Int): Flow<List<MakeAnAppointment>>
 }

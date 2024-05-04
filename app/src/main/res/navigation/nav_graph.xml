@@ -60,6 +60,9 @@
         <action
             android:id="@+id/action_searchFragment_to_moreInformationFragment"
             app:destination="@id/moreInformationFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_makeAnAppointmentFragment"
+            app:destination="@id/makeAnAppointmentFragment" />
     </fragment>
     <fragment
         android:id="@+id/addPetsProfileFragment"
@@ -83,6 +86,21 @@
             app:destination="@id/searchFragment" />
         <argument
             android:name="urlProfile"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_moreInformationFragment_to_makeAnAppointmentFragment"
+            app:destination="@id/makeAnAppointmentFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/makeAnAppointmentFragment"
+        android:name="com.example.pet_pawtrol.fragments.MakeAnAppointmentFragment"
+        android:label="fragment_make_an_appointment"
+        tools:layout="@layout/fragment_make_an_appointment" >
+        <action
+            android:id="@+id/action_makeAnAppointmentFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <argument
+            android:name="veterinarName"
             app:argType="string" />
     </fragment>
 </navigation>

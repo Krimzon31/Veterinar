@@ -43,7 +43,7 @@
             android:text="Цена: 1000 р"
             android:textColor="@color/black"
             app:layout_constraintStart_toEndOf="@+id/tvOtz"
-            tools:layout_editor_absoluteY="74dp" />
+            app:layout_constraintTop_toTopOf="@+id/tvOtz" />
 
         <Button
             android:id="@+id/moreInfBt"
@@ -58,7 +58,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            android:id="@+id/klinikBt"
+            android:id="@+id/zapBut"
             android:layout_width="136dp"
             android:layout_height="49dp"
             android:layout_marginTop="5dp"

@@ -9,13 +9,12 @@
 
     <ImageView
         android:id="@+id/imageView3"
-        android:layout_width="410dp"
-        android:layout_height="1033dp"
+        android:layout_width="408dp"
+        android:layout_height="1220dp"
         android:background="@color/backColor"
         android:backgroundTint="@color/backColor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@color/backColor" />
+        app:srcCompat="@color/backColor"
+        tools:layout_editor_absoluteX="3dp" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
@@ -33,8 +32,8 @@
 
             <ImageButton
                 android:id="@+id/BackImBut"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_marginStart="5dp"
                 android:background="@null"
                 android:backgroundTint="@null"
