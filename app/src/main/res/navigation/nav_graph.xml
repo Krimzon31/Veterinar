@@ -40,6 +40,9 @@
         <action
             android:id="@+id/action_profileFragment_to_addPetsProfileFragment"
             app:destination="@id/addPetsProfileFragment" />
+        <action
+            android:id="@+id/action_profileFragment_to_appointmentFragment"
+            app:destination="@id/appointmentFragment" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
@@ -102,5 +105,14 @@
         <argument
             android:name="veterinarName"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/appointmentFragment"
+        android:name="com.example.pet_pawtrol.fragments.AppointmentFragment"
+        android:label="fragment_appointment"
+        tools:layout="@layout/fragment_appointment" >
+        <action
+            android:id="@+id/action_appointmentFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 </navigation>

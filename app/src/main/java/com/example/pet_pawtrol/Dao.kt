@@ -52,4 +52,7 @@ interface Dao {
 
     @Query("SELECT * FROM make_an_appointment where id_user = :id_user")
     fun getAppointment(id_user: Int): Flow<List<MakeAnAppointment>>
+
+    @Delete
+    fun deleteAppointment(appointment: MakeAnAppointment)
 }

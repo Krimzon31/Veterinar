@@ -23,6 +23,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.jsoup.Jsoup
 import java.io.IOException
+import kotlin.random.Random
 
 class SerchRecycleFragment : Fragment() {
 
@@ -102,9 +103,9 @@ class SerchRecycleFragment : Fragment() {
             for (container in containers) {
                 val name = container.select("div[class=specialist]").select("div[class=specialist-top-info]").select("a[class=prof-name specialist-name js-specialist-card-link js-item-url js-link]").text()
                 val phNumber = container.select("div[class=specialist]").select("div[class=z-flex z-gap--12]").select("div[class=z-flex z-flex--column z-gap--4 z-mt--12 js-link]").select("div[class=specialist-phone]").select("div[class=js-phone js-phone-box  phoneView phone-hidden]").select("a").text()
-                val comment = "Отзывы: ${container.select("div[class=specialist]").select("div[class=specialist-photo-container]").select("div[class=specialist-mark]").select("div[class=specialist-mark]").select("span[class=stars-rating-text strong]").text()}"
+                val comment = container.select("div[class=specialist]").select("div[class=specialist-photo-container]").select("div[class=specialist-mark]").select("div[class=specialist-mark]").select("span[class=stars-rating-text strong]").text()
                 val specialization = container.select("div[class=specialist]").select("div[class=specialist-top-info]").select("div[class=prof-spec-list specialist-spec-list]").select("a").text()
-                val price = "Цена: 100p"
+                val price = generatePrice().toString()
                 val urlProfile = container.select("div[class=specialist]").select("div[class=specialist-top-info]").select("a[class=prof-name specialist-name js-specialist-card-link js-item-url js-link]").attr("href")
 
                 val vet = Veterinars(
@@ -120,6 +121,18 @@ class SerchRecycleFragment : Fragment() {
                 database.getDao().insertVeterinar(vet)
             }
         }
+    }
+
+    fun generatePrice(): Int {
+        val minValue = 300
+        val maxValue = 1500
+        val step = 200
+
+        val count = (maxValue - minValue) / step + 1
+        val randomIndex = Random.nextInt(count)
+        val randomNumber = minValue + randomIndex * step
+
+        return randomNumber
     }
 
     private fun initRcView() = with(binding){

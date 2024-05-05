@@ -41,14 +41,21 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         bundle = Bundle()
+
         binding.backImBt.setOnClickListener{
             MAIN.navController.navigate(R.id.action_profileFragment_to_searchFragment)
         }
+
         binding.addImBt.setOnClickListener {
             report()
         }
-        initRecycle()
+
+        binding.AppointmentBut.setOnClickListener{
+            MAIN.navController.navigate(R.id.action_profileFragment_to_appointmentFragment)
+        }
+
         init()
+        initRecycle()
     }
     private fun init() = with(binding) {
         val jsonString = MAIN.pref?.getString("user", """
