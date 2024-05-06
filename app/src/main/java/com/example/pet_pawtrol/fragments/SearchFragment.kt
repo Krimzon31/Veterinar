@@ -86,9 +86,11 @@ class SearchFragment : Fragment() {
         binding.backImBt.setOnClickListener{
             MAIN.navController.navigate(R.id.action_searchFragment_to_autorizationFragment)
         }
+
         binding.profImBt.setOnClickListener{
             MAIN.navController.navigate(R.id.action_searchFragment_to_profileFragment)
         }
+
         init()
     }
 
