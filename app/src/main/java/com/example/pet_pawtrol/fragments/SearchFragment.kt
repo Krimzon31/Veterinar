@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.example.pet_pawtrol.MAIN
@@ -51,6 +52,37 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.filterCardView.isVisible = false
+
+        binding.filterImBt.setOnClickListener {
+            binding.filterCardView.isVisible = true
+        }
+
+        binding.sortByPriceAButton.setOnClickListener{
+            SerchRecycleFragment.newInstance().sortByPriceAscending()
+            binding.filterCardView.isVisible = false
+        }
+
+        binding.sortByPriceDButt.setOnClickListener{
+            SerchRecycleFragment.newInstance().sortByPriceDescending()
+            binding.filterCardView.isVisible = false
+        }
+
+        binding.sortByRatingAButt.setOnClickListener{
+            SerchRecycleFragment.newInstance().sortByRatingAscending()
+            binding.filterCardView.isVisible = false
+        }
+
+        binding.sortByRatingDButt.setOnClickListener{
+            SerchRecycleFragment.newInstance().sortByRatingDescending()
+            binding.filterCardView.isVisible = false
+        }
+
+        binding.cancelButt.setOnClickListener{
+            binding.filterCardView.isVisible = false
+        }
+
         binding.backImBt.setOnClickListener{
             MAIN.navController.navigate(R.id.action_searchFragment_to_autorizationFragment)
         }

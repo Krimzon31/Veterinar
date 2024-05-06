@@ -10,12 +10,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.pet_pawtrol.Entity.Veterinars
 import com.example.pet_pawtrol.MAIN
 import com.example.pet_pawtrol.MainDb
+import com.example.pet_pawtrol.R
 import com.example.pet_pawtrol.adapters.SearchAdapter
 import com.example.pet_pawtrol.adapters.SearchModel
 import com.example.pet_pawtrol.databinding.FragmentSerchRecycleBinding
+import com.example.pet_pawtrol.listSearch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
@@ -30,6 +33,8 @@ class SerchRecycleFragment : Fragment() {
     private lateinit var binding: FragmentSerchRecycleBinding
     private lateinit var adapter: SearchAdapter
     var list = arrayListOf<SearchModel>()
+    private lateinit var recyclerView: RecyclerView
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -112,9 +117,9 @@ class SerchRecycleFragment : Fragment() {
                     null,
                     name,
                     phNumber,
-                    comment,
+                    comment.toFloat(),
                     specialization,
-                    price,
+                    price.toInt(),
                     urlProfile
                 )
 
@@ -139,9 +144,47 @@ class SerchRecycleFragment : Fragment() {
         rcSerch.layoutManager = LinearLayoutManager(activity)
         adapter = SearchAdapter()
         getData().observe(viewLifecycleOwner){ vlist ->
+            listSearch = vlist as ArrayList<SearchModel>
             adapter.submitList(vlist)
             rcSerch.adapter = adapter
         }
+    }
+
+    fun sortByPriceAscending(){
+        recyclerView = MAIN.findViewById(R.id.rcSerch)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        adapter = SearchAdapter()
+            val sortedList = listSearch.sortedBy { it.price }
+            adapter.submitList(sortedList)
+            recyclerView.adapter = adapter
+    }
+
+    fun sortByPriceDescending(){
+        recyclerView = MAIN.findViewById(R.id.rcSerch)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        adapter = SearchAdapter()
+            val sortedList = listSearch.sortedByDescending { it.price }
+            adapter.submitList(sortedList)
+            recyclerView.adapter = adapter
+    }
+
+    fun sortByRatingAscending(){
+        recyclerView = MAIN.findViewById(R.id.rcSerch)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        adapter = SearchAdapter()
+            val sortedList = listSearch.sortedBy { it.otz }
+            adapter.submitList(sortedList)
+            recyclerView.adapter = adapter
+    }
+
+
+    fun sortByRatingDescending(){
+        recyclerView = MAIN.findViewById(R.id.rcSerch)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        adapter = SearchAdapter()
+            val sortedList = listSearch.sortedByDescending { it.otz }
+            adapter.submitList(sortedList)
+            recyclerView.adapter = adapter
     }
 
     companion object {

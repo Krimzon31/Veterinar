@@ -17,13 +17,13 @@ data class Veterinars(
     val phNumber: String,
 
     @ColumnInfo(name = "comment")
-    val comment: String,
+    val comment: Float,
 
     @ColumnInfo(name = "specialization")
     val specialization: String,
 
     @ColumnInfo(name = "price")
-    val price: String,
+    val price: Int,
 
     @ColumnInfo(name = "urlProfile")
     val urlProfile: String

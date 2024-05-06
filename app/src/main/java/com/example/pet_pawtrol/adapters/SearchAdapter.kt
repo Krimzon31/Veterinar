@@ -24,8 +24,8 @@ class SearchAdapter: ListAdapter<SearchModel, SearchAdapter.Holder>(Comparator()
         fun bind(item: SearchModel) = with(binding){
             tvName.text = item.name
             //tvDate.text = item.ph_number
-            tvprice.text = item.price
-            tvOtz.text = item.otz
+            tvprice.text = item.price.toString()
+            tvOtz.text = item.otz.toString()
             moreInfBt.setOnClickListener{
                 bundle.putString("urlProfile", item.urlProfile)
                 findNavController(it).navigate(R.id.action_searchFragment_to_moreInformationFragment, bundle)
