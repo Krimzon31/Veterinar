@@ -15,11 +15,12 @@ import com.example.pet_pawtrol.MAIN
 import com.example.pet_pawtrol.MainDb
 import com.example.pet_pawtrol.R
 import com.example.pet_pawtrol.adapters.PetsModel
+import com.example.pet_pawtrol.adapters.SearchModel
 import com.example.pet_pawtrol.databinding.FragmentMakeAnAppointmentBinding
 import org.json.JSONObject
 
 class MakeAnAppointmentFragment : Fragment() {
-
+    
     lateinit var binding: FragmentMakeAnAppointmentBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,18 +38,24 @@ class MakeAnAppointmentFragment : Fragment() {
         binding.makeButton.setOnClickListener{
             val database = MainDb.getDb(MAIN)
             val veterinarName = arguments?.getString("veterinarName","")
-            val appointment = MakeAnAppointment(
-                null,
-                binding.spDate.getSelectedItem().toString(),
-                binding.spTime.getSelectedItem().toString(),
-                binding.spPets.getSelectedItem().toString(),
-                veterinarName.toString(),
-                getUserId()
-            )
+            var veterinarEmail = ""
+            getData().observe(viewLifecycleOwner){ vlist ->
+                vlist.forEach{
+                    veterinarEmail = it.email!!
+                    val appointment = MakeAnAppointment(
+                        null,
+                        veterinarEmail,
+                        binding.spPets.getSelectedItem().toString(),
+                        veterinarName.toString(),
+                        getUserId()
+                    )
 
-            Thread{
-                database.getDao().insertAppointment(appointment)
-            }.start()
+                    Thread{
+                        database.getDao().insertAppointment(appointment)
+                    }.start()
+                }
+            }
+
 
             Toast.makeText(MAIN, "Питомец: ${binding.spPets.getSelectedItem().toString()} записан к ветеринару: ${veterinarName.toString()}", Toast.LENGTH_SHORT).show()
         }
@@ -72,6 +79,29 @@ class MakeAnAppointmentFragment : Fragment() {
             spinnerInit(list)
         }
 
+    }
+
+    private fun getData(): LiveData<List<SearchModel>>{
+        val veterinarName = arguments?.getString("veterinarName","")
+        val database = MainDb.getDb(MAIN)
+        val listVet = MutableLiveData<List<SearchModel>>()
+        val query = database.getDao().getVeterinarByName(veterinarName)
+        query.asLiveData().observe(viewLifecycleOwner){vetlist->
+            val vetirList = ArrayList<SearchModel>()
+            vetlist.forEach{ veterinars ->
+                val vet = SearchModel(
+                    veterinars.name,
+                    veterinars.email,
+                    veterinars.comment,
+                    veterinars.specialization,
+                    veterinars.price,
+                    veterinars.urlProfile
+                )
+                vetirList.add(vet)
+            }
+            listVet.value = vetirList
+        }
+        return listVet
     }
     fun getUserId(): Int {
         val jsonString = MAIN.pref?.getString("user", """

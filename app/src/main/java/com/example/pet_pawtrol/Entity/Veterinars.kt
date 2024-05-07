@@ -13,8 +13,8 @@ data class Veterinars(
     @ColumnInfo(name = "name")
     val name: String,
 
-    @ColumnInfo(name = "phNumber")
-    val phNumber: String,
+    @ColumnInfo(name = "email")
+    val email: String,
 
     @ColumnInfo(name = "comment")
     val comment: Float,

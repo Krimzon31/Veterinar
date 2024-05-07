@@ -38,6 +38,9 @@ interface Dao {
     @Query("SELECT * FROM veterinars")
     fun getAllVeterinar(): Flow<List<Veterinars>>
 
+    @Query("SELECT * FROM veterinars where name = :name")
+    fun getVeterinarByName(name: String?): Flow<List<Veterinars>>
+
     @Query("SELECT COUNT(*) FROM veterinars")
     fun countTableRowsVeterinars(): LiveData<Int>
 

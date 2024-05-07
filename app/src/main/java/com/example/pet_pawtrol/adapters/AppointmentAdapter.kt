@@ -22,14 +22,12 @@ class AppointmentAdapter (private val appointmentList: List<AppointmentModel>) :
         val currentItem = appointmentList[position]
         holder.tvVetName.text = currentItem.veterinarName
         holder.tvPet.text = currentItem.nicknamePets
-        holder.tvDate.text = currentItem.date
-        holder.tvTime.text = currentItem.time
+        holder.tvEmail.text = currentItem.email
         holder.delBut.setOnClickListener {
             val db = MainDb.getDb(MAIN)
             val zap = MakeAnAppointment(
                 currentItem.id,
-                currentItem.date,
-                currentItem.time,
+                currentItem.email,
                 currentItem.nicknamePets,
                 currentItem.veterinarName,
                 currentItem.user_id
@@ -49,8 +47,7 @@ class AppointmentAdapter (private val appointmentList: List<AppointmentModel>) :
 
         val tvVetName: TextView = item.findViewById(R.id.tvVetName)
         val tvPet: TextView = item.findViewById(R.id.tvPet)
-        val tvDate: TextView = item.findViewById(R.id.tvDate)
-        val tvTime: TextView = item.findViewById(R.id.tvTimeA)
+        val tvEmail: TextView = item.findViewById(R.id.tvemail)
         val delBut: Button = item.findViewById(R.id.delBut)
 
     }

@@ -9,14 +9,11 @@ data class MakeAnAppointment(
     @PrimaryKey(autoGenerate = true)
     val ID: Int? = null,
 
-    @ColumnInfo(name = "date")
-    val date: String,
-
-    @ColumnInfo(name = "time")
-    val time: String,
+    @ColumnInfo(name = "email")
+    val email: String,
 
     @ColumnInfo(name = "nicknamePets")
-    val nicknamePets: String,
+    val nicknamePets: String?,
 
     @ColumnInfo(name = "veterinarName")
     val veterinarName: String?,

@@ -49,7 +49,7 @@ class GrymerSearchFragment : Fragment() {
             vetlist.forEach{ veterinars ->
                 val vet = SearchModel(
                     veterinars.name,
-                    veterinars.phNumber,
+                    veterinars.email,
                     veterinars.comment,
                     veterinars.specialization,
                     veterinars.price,

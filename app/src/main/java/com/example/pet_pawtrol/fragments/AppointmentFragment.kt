@@ -79,8 +79,7 @@ class AppointmentFragment : Fragment() {
             list.forEach { appoint ->
                 val item = AppointmentModel(
                     appoint.ID,
-                    appoint.date,
-                    appoint.time,
+                    appoint.email,
                     appoint.nicknamePets,
                     appoint.veterinarName,
                     appoint.id_user

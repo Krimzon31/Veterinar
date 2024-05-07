@@ -77,7 +77,7 @@ class SerchRecycleFragment : Fragment() {
             vetlist.forEach{ veterinars ->
                 val vet = SearchModel(
                     veterinars.name,
-                    veterinars.phNumber,
+                    veterinars.email,
                     veterinars.comment,
                     veterinars.specialization,
                     veterinars.price,
@@ -107,23 +107,40 @@ class SerchRecycleFragment : Fragment() {
             val containers = document.select("div[class=js-results-item]")
             for (container in containers) {
                 val name = container.select("div[class=specialist]").select("div[class=specialist-top-info]").select("a[class=prof-name specialist-name js-specialist-card-link js-item-url js-link]").text()
-                val phNumber = container.select("div[class=specialist]").select("div[class=z-flex z-gap--12]").select("div[class=z-flex z-flex--column z-gap--4 z-mt--12 js-link]").select("div[class=specialist-phone]").select("div[class=js-phone js-phone-box  phoneView phone-hidden]").select("a").text()
+                //val phNumber = container.select("div[class=specialist]").select("div[class=z-flex z-gap--12]").select("div[class=z-flex z-flex--column z-gap--4 z-mt--12 js-link]").select("div[class=specialist-phone]").select("div[class=js-phone js-phone-box  phoneView phone-hidden]").select("a").text()
+                val email = finalGenerateEmail(name)
                 val comment = container.select("div[class=specialist]").select("div[class=specialist-photo-container]").select("div[class=specialist-mark]").select("div[class=specialist-mark]").select("span[class=stars-rating-text strong]").text()
                 val specialization = container.select("div[class=specialist]").select("div[class=specialist-top-info]").select("div[class=prof-spec-list specialist-spec-list]").select("a").text()
                 val price = generatePrice().toString()
                 val urlProfile = container.select("div[class=specialist]").select("div[class=specialist-top-info]").select("a[class=prof-name specialist-name js-specialist-card-link js-item-url js-link]").attr("href")
 
-                val vet = Veterinars(
-                    null,
-                    name,
-                    phNumber,
-                    comment.toFloat(),
-                    specialization,
-                    price.toInt(),
-                    urlProfile
-                )
+                if (comment.isNotEmpty()) {
+                    val commentWithoutComma = comment.replace(",", ".")
+                    val commentFloat = commentWithoutComma.trim().toFloat()
 
-                database.getDao().insertVeterinar(vet)
+                    val vet = Veterinars(
+                        null,
+                        name,
+                        email,
+                        commentFloat,
+                        specialization,
+                        price.toInt(),
+                        urlProfile
+                    )
+
+                    database.getDao().insertVeterinar(vet)
+                }
+                else{
+                    val vet = Veterinars(
+                        null,
+                        name,
+                        email,
+                        1.0F,
+                        specialization,
+                        price.toInt(),
+                        urlProfile
+                    )
+                }
             }
         }
     }
@@ -185,6 +202,34 @@ class SerchRecycleFragment : Fragment() {
             val sortedList = listSearch.sortedByDescending { it.otz }
             adapter.submitList(sortedList)
             recyclerView.adapter = adapter
+    }
+
+    fun generateEmail(firstName: String, domain: String = "mail.com"): String {
+        val sanitizedFirstName = firstName.lowercase().replace(" ", "")
+        return "$sanitizedFirstName@$domain"
+    }
+
+    fun finalGenerateEmail(name: String): String {
+        val email = generateEmail(cyrillicToTranslit(name))
+        return email
+    }
+
+    fun cyrillicToTranslit(text: String): String {
+        val translitMap = mapOf(
+            'а' to 'a', 'б' to 'b', 'в' to 'v', 'г' to 'g', 'д' to 'd',
+            'е' to 'e', 'ё' to 'e', 'ж' to 'g', 'з' to 'z', 'и' to 'i',
+            'й' to 'y', 'к' to 'k', 'л' to 'l', 'м' to 'm', 'н' to 'n',
+            'о' to 'o', 'п' to 'p', 'р' to 'r', 'с' to 's', 'т' to 't',
+            'у' to 'u', 'ф' to 'f', 'х' to 'h', 'ц' to 'c', 'ч' to 'h',
+            'ш' to 'h', 'щ' to 'h', 'ъ' to ' ', 'ы' to 'y', 'ь' to ' ',
+            'э' to 'e', 'ю' to 'y', 'я' to 'i'
+        )
+
+        return text.map { char ->
+            translitMap[char.lowercaseChar()]?.let { translitChar ->
+                if (char.isUpperCase()) translitChar.uppercase() else translitChar
+            } ?: char
+        }.joinToString("")
     }
 
     companion object {

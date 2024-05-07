@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/imageView4"
-        android:layout_width="396dp"
+        android:layout_width="450dp"
         android:layout_height="881dp"
         android:background="@color/backColor"
         android:backgroundTint="@color/backColor"
@@ -19,64 +19,23 @@
         tools:layout_editor_absoluteY="-48dp" />
 
     <TextView
-        android:id="@+id/tvDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:text="Выберите дату:"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="90dp"
-        android:text="Выберите время:"
-        app:layout_constraintEnd_toEndOf="@+id/spDate"
-        app:layout_constraintTop_toBottomOf="@+id/spDate" />
-
-    <Spinner
-        android:id="@+id/spDate"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:layout_marginEnd="-100dp"
-        android:background="@color/white"
-        android:backgroundTint="@color/white"
-        android:entries="@array/date"
-        app:layout_constraintEnd_toEndOf="@+id/tvDate"
-        app:layout_constraintTop_toBottomOf="@+id/tvDate" />
-
-    <Spinner
-        android:id="@+id/spTime"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:background="@color/white"
-        android:entries="@array/time"
-        app:layout_constraintEnd_toEndOf="@+id/spDate"
-        app:layout_constraintTop_toBottomOf="@+id/tvTime"/>
-
-    <TextView
         android:id="@+id/tvPets"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="-10dp"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="30dp"
         android:text="Выберите питомца:"
-        app:layout_constraintEnd_toEndOf="@+id/tvTime"
-        app:layout_constraintTop_toBottomOf="@+id/spTime" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView4" />
 
     <Spinner
         android:id="@+id/spPets"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="-100dp"
         android:layout_marginTop="25dp"
         android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/spTime"
+        app:layout_constraintStart_toStartOf="@+id/tvPets"
         app:layout_constraintTop_toBottomOf="@+id/tvPets" />
 
     <Button
@@ -92,6 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/spPets" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView4"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/cardColor"
@@ -108,7 +68,7 @@
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@null"
-                android:scaleType="fitXY"
+                android:scaleType="center"
                 android:src="@android:drawable/ic_menu_revert"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
