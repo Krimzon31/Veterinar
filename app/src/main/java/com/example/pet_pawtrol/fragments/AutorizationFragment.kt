@@ -76,7 +76,7 @@ class AutorizationFragment : Fragment(){
                     }
                 }
                 if (count == 0) {
-                    Toast.makeText(MAIN, "Неверный логи или пароль", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(MAIN, "Неверный логиy или пароль", Toast.LENGTH_SHORT).show()
                 }
             }
         }

@@ -174,7 +174,7 @@ class RegistrationFragment : Fragment() {
             return true
         }
         else{
-            Toast.makeText(MAIN, "адрес электронной почты имееет неверный формат", Toast.LENGTH_SHORT).show()
+            Toast.makeText(MAIN, "адрес электронной почты имеет неверный формат", Toast.LENGTH_SHORT).show()
             return false
         }
     }
