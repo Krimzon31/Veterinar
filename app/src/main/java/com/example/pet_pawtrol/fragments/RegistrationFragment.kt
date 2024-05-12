@@ -112,7 +112,7 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun nullPointerExamination(): Boolean {
-        if (binding.pasEditText.text.toString().trim() == binding.dubPasEditText.text.toString().trim()) {
+        if (binding.firstNameEditText.text.toString() == "" || binding.lastNameEditText.text.toString() == "" || binding.phoneNumberEditText.text.toString() == "" || binding.emailEditText.text.toString() == "" || binding.loginEditText.text.toString() == "" || binding.pasEditText.text.toString() == "" || binding.dubPasEditText.text.toString() == "") {
             Toast.makeText(MAIN, "Все поля должны быть заполнены", Toast.LENGTH_SHORT).show()
             return false
         }
