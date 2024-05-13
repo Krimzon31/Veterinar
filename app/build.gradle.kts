@@ -70,4 +70,6 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.9.1")
 
     implementation("com.squareup.picasso:picasso:2.71828")
+
+    implementation("org.mockito:mockito-core:3.12.4")
 }

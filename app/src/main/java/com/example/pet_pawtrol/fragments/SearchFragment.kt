@@ -1,9 +1,13 @@
 package com.example.pet_pawtrol.fragments
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -53,6 +57,8 @@ class SearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        checkNETConnection()
+
         binding.filterCardView.isVisible = false
 
         binding.filterImBt.setOnClickListener {
@@ -80,6 +86,7 @@ class SearchFragment : Fragment() {
         }
 
         binding.cancelButt.setOnClickListener{
+            SerchRecycleFragment.newInstance().cancelSort()
             binding.filterCardView.isVisible = false
         }
 
@@ -100,6 +107,18 @@ class SearchFragment : Fragment() {
         TabLayoutMediator(tLSearch, vpList){
             tab, pos -> tab.text = tList[pos]
         }.attach()
+    }
+
+    private fun checkNETConnection(){
+        val connectivityManager = context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+        val isConnected: Boolean = activeNetwork?.isConnected ?: false
+        if(isConnected){
+            Toast.makeText(activity, "Есть подключение к интернету", Toast.LENGTH_LONG).show()
+        }
+        else{
+            Toast.makeText(activity, "Отсутствует подключение к интернету", Toast.LENGTH_LONG).show()
+        }
     }
 
     companion object {

@@ -38,59 +38,24 @@ class RegistrationFragment : Fragment() {
         }
     }
     private fun registrationUser() {
+
         val database = MainDb.getDb(MAIN)
         if(nullPointerExamination()){
             if(lastNameAndFirstNameExamination()) {
                 if (phoneNumberExamination()) {
                     if(emailExamination()) {
                         if (passwordExamination()) {
-                            database.getDao().getAllUser().asLiveData().observe(MAIN) { list ->
-                                if (list.isEmpty()) {
-                                    val user = Users(
-                                        null,
-                                        binding.firstNameEditText.text.toString().trim(),
-                                        binding.lastNameEditText.text.toString().trim(),
-                                        binding.phoneNumberEditText.text.toString().trim(),
-                                        binding.emailEditText.text.toString().trim(),
-                                        binding.loginEditText.text.toString().trim(),
-                                        binding.pasEditText.text.toString().trim()
-                                    )
-                                    Thread {
-                                        db.getDao().insertUser(user)
-                                    }.start()
-                                    MAIN.navController.navigate(R.id.action_registrationFragment_to_autorizationFragment)
-                                    Toast.makeText(
-                                        MAIN,
-                                        "Зарегистрирован пользователь ${binding.lastNameEditText.text.toString()}",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                } else {
-
-                                    list.forEach { userdata ->
-                                        if (userdata.email == binding.emailEditText.text.toString()
-                                                .trim()
-                                        ) {
-                                            count = 1
-                                            return@forEach
-                                        }
-                                    }
-                                    if (count == 1) {
-                                        Toast.makeText(
-                                            MAIN,
-                                            "Такой пользователь уже есть",
-                                            Toast.LENGTH_SHORT
-                                        )
-                                            .show()
-                                    }
-                                    if (count == 0) {
+                            try {
+                                database.getDao().getAllUser().asLiveData().observe(MAIN) { list ->
+                                    if (list.isEmpty()) {
                                         val user = Users(
                                             null,
-                                            binding.firstNameEditText.text.toString(),
-                                            binding.lastNameEditText.text.toString(),
-                                            binding.phoneNumberEditText.text.toString(),
-                                            binding.emailEditText.text.toString(),
-                                            binding.loginEditText.text.toString(),
-                                            binding.pasEditText.text.toString()
+                                            binding.firstNameEditText.text.toString().trim(),
+                                            binding.lastNameEditText.text.toString().trim(),
+                                            binding.phoneNumberEditText.text.toString().trim(),
+                                            binding.emailEditText.text.toString().trim(),
+                                            binding.loginEditText.text.toString().trim(),
+                                            binding.pasEditText.text.toString().trim()
                                         )
                                         Thread {
                                             db.getDao().insertUser(user)
@@ -101,8 +66,53 @@ class RegistrationFragment : Fragment() {
                                             "Зарегистрирован пользователь ${binding.lastNameEditText.text.toString()}",
                                             Toast.LENGTH_SHORT
                                         ).show()
+                                    } else {
+
+                                        list.forEach { userdata ->
+                                            if (userdata.email == binding.emailEditText.text.toString()
+                                                    .trim()
+                                            ) {
+                                                count = 1
+                                                return@forEach
+                                            }
+                                        }
+                                        if (count == 1) {
+                                            Toast.makeText(
+                                                MAIN,
+                                                "Такой пользователь уже есть",
+                                                Toast.LENGTH_SHORT
+                                            )
+                                                .show()
+                                        }
+                                        if (count == 0) {
+                                            val user = Users(
+                                                null,
+                                                binding.firstNameEditText.text.toString(),
+                                                binding.lastNameEditText.text.toString(),
+                                                binding.phoneNumberEditText.text.toString(),
+                                                binding.emailEditText.text.toString(),
+                                                binding.loginEditText.text.toString(),
+                                                binding.pasEditText.text.toString()
+                                            )
+                                            Thread {
+                                                db.getDao().insertUser(user)
+                                            }.start()
+                                            MAIN.navController.navigate(R.id.action_registrationFragment_to_autorizationFragment)
+                                            Toast.makeText(
+                                                MAIN,
+                                                "Зарегистрирован пользователь ${binding.lastNameEditText.text.toString()}",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        }
                                     }
                                 }
+                            }
+                            catch (e: Exception) {
+                                Toast.makeText(
+                                    MAIN,
+                                    "${e}",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     }
@@ -112,7 +122,13 @@ class RegistrationFragment : Fragment() {
     }
 
     private fun nullPointerExamination(): Boolean {
-        if (binding.firstNameEditText.text.toString() == "" || binding.lastNameEditText.text.toString() == "" || binding.phoneNumberEditText.text.toString() == "" || binding.emailEditText.text.toString() == "" || binding.loginEditText.text.toString() == "" || binding.pasEditText.text.toString() == "" || binding.dubPasEditText.text.toString() == "") {
+        if (binding.firstNameEditText.text.toString() == "" ||
+            binding.lastNameEditText.text.toString() == "" ||
+            binding.phoneNumberEditText.text.toString() == "" ||
+            binding.emailEditText.text.toString() == "" ||
+            binding.loginEditText.text.toString() == "" ||
+            binding.pasEditText.text.toString() == "" ||
+            binding.dubPasEditText.text.toString() == "") {
             Toast.makeText(MAIN, "Все поля должны быть заполнены", Toast.LENGTH_SHORT).show()
             return false
         }

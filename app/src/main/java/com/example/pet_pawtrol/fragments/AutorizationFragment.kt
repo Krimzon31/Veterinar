@@ -38,20 +38,21 @@ class AutorizationFragment : Fragment(){
         }
     }
 
-    private fun autorization(){
+    fun autorization(){
         if(binding.loginEditText.text.toString() == "" || binding.pasEditText.text.toString() == ""){
             Toast.makeText(MAIN, "Все поля должны быть заполнены", Toast.LENGTH_SHORT).show()
         }
         else {
-            val database = MainDb.getDb(MAIN)
-            database.getDao().getAllUser().asLiveData().observe(MAIN) { list ->
+            try {
+                val database = MainDb.getDb(MAIN)
+                database.getDao().getAllUser().asLiveData().observe(MAIN) { list ->
 
-                list.forEach { user ->
+                    list.forEach { user ->
 
-                    if (binding.loginEditText.text.toString().trim() == user.login) {
+                        if (binding.loginEditText.text.toString().trim() == user.login) {
 
-                        if (binding.pasEditText.text.toString().trim() == user.password) {
-                            val userString = """
+                            if (binding.pasEditText.text.toString().trim() == user.password) {
+                                val userString = """
                                         {
                                             "user":{
                                                 "firstname" : "${user.firstname}",
@@ -62,22 +63,31 @@ class AutorizationFragment : Fragment(){
                                             }
                                         }
                                         """
-                            MAIN.saveData(userString)
-                            MAIN.navController.navigate(R.id.action_autorizationFragment_to_searchFragment)
+                                MAIN.saveData(userString)
+                                MAIN.navController.navigate(R.id.action_autorizationFragment_to_searchFragment)
 
-                            count = 1
-                            Toast.makeText(
-                                MAIN,
-                                "Пользователь: ${user.lastname} авторизирован",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            return@forEach
+                                count = 1
+                                Toast.makeText(
+                                    MAIN,
+                                    "Пользователь: ${user.lastname} авторизирован",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                return@forEach
+                            }
                         }
                     }
+                    if (count == 0) {
+                        Toast.makeText(MAIN, "Неверный логин или пароль", Toast.LENGTH_SHORT).show()
+                    }
                 }
-                if (count == 0) {
-                    Toast.makeText(MAIN, "Неверный логин или пароль", Toast.LENGTH_SHORT).show()
-                }
+            }
+            catch (e: Exception) {
+                Toast.makeText(
+                    MAIN,
+                    "${e}",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return TODO("Provide the return value")
             }
         }
     }

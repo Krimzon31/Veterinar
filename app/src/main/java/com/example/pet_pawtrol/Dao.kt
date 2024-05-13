@@ -26,7 +26,7 @@ interface Dao {
     @Query("SELECT * FROM PETS where id_user = :id_user")
     fun getPets(id_user: Int): Flow<List<Pets>>
 
-    @Query("SELECT ID FROM pets WHERE id_user = :id and nickname = :nickname and petView = :view and poroda = :poroda")
+    @Query("SELECT idPet FROM pets WHERE id_user = :id and nickname = :nickname and petView = :view and poroda = :poroda")
     fun getPetsId(id : Int, nickname: String, view: String, poroda: String): Int
 
     @Delete

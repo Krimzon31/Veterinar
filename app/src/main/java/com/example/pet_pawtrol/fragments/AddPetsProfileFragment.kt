@@ -46,22 +46,31 @@ class AddPetsProfileFragment : Fragment() {
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    val pet = Pets(
-                        null,
-                        binding.etNickname.text.toString(),
-                        binding.etPetView.text.toString(),
-                        binding.etPoroda.text.toString(),
-                        id!!
-                    )
-                    Thread {
-                        db.getDao().insertPet(pet)
-                    }.start()
-                    MAIN.navController.navigate(R.id.action_addPetsProfileFragment_to_profileFragment)
-                    Toast.makeText(
-                        MAIN,
-                        "Питомец: ${binding.etNickname.text} добавлен",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    try {
+                        val pet = Pets(
+                            null,
+                            binding.etNickname.text.toString(),
+                            binding.etPetView.text.toString(),
+                            binding.etPoroda.text.toString(),
+                            id!!
+                        )
+                        Thread {
+                            db.getDao().insertPet(pet)
+                        }.start()
+                        MAIN.navController.navigate(R.id.action_addPetsProfileFragment_to_profileFragment)
+                        Toast.makeText(
+                            MAIN,
+                            "Питомец: ${binding.etNickname.text} добавлен",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    catch (e: Exception) {
+                        Toast.makeText(
+                            MAIN,
+                            "${e}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         }

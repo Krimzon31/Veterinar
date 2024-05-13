@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -69,6 +70,7 @@ class SerchRecycleFragment : Fragment() {
         }
     }
     private fun getData(): LiveData<List<SearchModel>>{
+        try{
         val database = MainDb.getDb(MAIN)
         val listVet = MutableLiveData<List<SearchModel>>()
         val query = database.getDao().getAllVeterinar()
@@ -88,60 +90,88 @@ class SerchRecycleFragment : Fragment() {
             listVet.value = vetirList
         }
         return listVet
+        }
+        catch (e: Exception) {
+            Toast.makeText(
+                MAIN,
+                "${e}",
+                Toast.LENGTH_SHORT
+            ).show()
+            return TODO("Provide the return value")
+        }
     }
 
     private suspend fun setData() = withContext(Dispatchers.IO) {
-        val database = MainDb.getDb(MAIN)
-        val url = "https://zoon.ru/penza/p-veterinar/"
-        val client = OkHttpClient()
+        try {
+            val database = MainDb.getDb(MAIN)
+            val url = "https://zoon.ru/penza/p-veterinar/"
+            val client = OkHttpClient()
 
-        val request = Request.Builder()
-            .url(url)
-            .build()
+            val request = Request.Builder()
+                .url(url)
+                .build()
 
-        client.newCall(request).execute().use { response ->
-            if (!response.isSuccessful) throw IOException("Unexpected code $response")
+            client.newCall(request).execute().use { response ->
+                if (!response.isSuccessful) throw IOException("Unexpected code $response")
 
-            val document = Jsoup.parse(response.body?.string())
+                val document = Jsoup.parse(response.body?.string())
 
-            val containers = document.select("div[class=js-results-item]")
-            for (container in containers) {
-                val name = container.select("div[class=specialist]").select("div[class=specialist-top-info]").select("a[class=prof-name specialist-name js-specialist-card-link js-item-url js-link]").text()
-                //val phNumber = container.select("div[class=specialist]").select("div[class=z-flex z-gap--12]").select("div[class=z-flex z-flex--column z-gap--4 z-mt--12 js-link]").select("div[class=specialist-phone]").select("div[class=js-phone js-phone-box  phoneView phone-hidden]").select("a").text()
-                val email = finalGenerateEmail(name)
-                val comment = container.select("div[class=specialist]").select("div[class=specialist-photo-container]").select("div[class=specialist-mark]").select("div[class=specialist-mark]").select("span[class=stars-rating-text strong]").text()
-                val specialization = container.select("div[class=specialist]").select("div[class=specialist-top-info]").select("div[class=prof-spec-list specialist-spec-list]").select("a").text()
-                val price = generatePrice().toString()
-                val urlProfile = container.select("div[class=specialist]").select("div[class=specialist-top-info]").select("a[class=prof-name specialist-name js-specialist-card-link js-item-url js-link]").attr("href")
+                val containers = document.select("div[class=js-results-item]")
+                for (container in containers) {
+                    val name = container.select("div[class=specialist]")
+                        .select("div[class=specialist-top-info]")
+                        .select("a[class=prof-name specialist-name js-specialist-card-link js-item-url js-link]")
+                        .text()
+                    //val phNumber = container.select("div[class=specialist]").select("div[class=z-flex z-gap--12]").select("div[class=z-flex z-flex--column z-gap--4 z-mt--12 js-link]").select("div[class=specialist-phone]").select("div[class=js-phone js-phone-box  phoneView phone-hidden]").select("a").text()
+                    val email = finalGenerateEmail(name)
+                    val comment = container.select("div[class=specialist]")
+                        .select("div[class=specialist-photo-container]")
+                        .select("div[class=specialist-mark]").select("div[class=specialist-mark]")
+                        .select("span[class=stars-rating-text strong]").text()
+                    val specialization = container.select("div[class=specialist]")
+                        .select("div[class=specialist-top-info]")
+                        .select("div[class=prof-spec-list specialist-spec-list]").select("a").text()
+                    val price = generatePrice().toString()
+                    val urlProfile = container.select("div[class=specialist]")
+                        .select("div[class=specialist-top-info]")
+                        .select("a[class=prof-name specialist-name js-specialist-card-link js-item-url js-link]")
+                        .attr("href")
 
-                if (comment.isNotEmpty()) {
-                    val commentWithoutComma = comment.replace(",", ".")
-                    val commentFloat = commentWithoutComma.trim().toFloat()
+                    if (comment.isNotEmpty()) {
+                        val commentWithoutComma = comment.replace(",", ".")
+                        val commentFloat = commentWithoutComma.trim().toFloat()
 
-                    val vet = Veterinars(
-                        null,
-                        name,
-                        email,
-                        commentFloat,
-                        specialization,
-                        price.toInt(),
-                        urlProfile
-                    )
+                        val vet = Veterinars(
+                            null,
+                            name,
+                            email,
+                            commentFloat,
+                            specialization,
+                            price.toInt(),
+                            urlProfile
+                        )
 
-                    database.getDao().insertVeterinar(vet)
-                }
-                else{
-                    val vet = Veterinars(
-                        null,
-                        name,
-                        email,
-                        1.0F,
-                        specialization,
-                        price.toInt(),
-                        urlProfile
-                    )
+                        database.getDao().insertVeterinar(vet)
+                    } else {
+                        val vet = Veterinars(
+                            null,
+                            name,
+                            email,
+                            1.0F,
+                            specialization,
+                            price.toInt(),
+                            urlProfile
+                        )
+                    }
                 }
             }
+        }
+        catch (e: Exception) {
+            Toast.makeText(
+                MAIN,
+                "${e}",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -157,13 +187,13 @@ class SerchRecycleFragment : Fragment() {
         return randomNumber
     }
 
-    private fun initRcView() = with(binding){
-        rcSerch.layoutManager = LinearLayoutManager(activity)
+    fun initRcView(){
+        binding.rcSerch.layoutManager = LinearLayoutManager(activity)
         adapter = SearchAdapter()
         getData().observe(viewLifecycleOwner){ vlist ->
             listSearch = vlist as ArrayList<SearchModel>
             adapter.submitList(vlist)
-            rcSerch.adapter = adapter
+            binding.rcSerch.adapter = adapter
         }
     }
 
@@ -202,6 +232,15 @@ class SerchRecycleFragment : Fragment() {
             val sortedList = listSearch.sortedByDescending { it.otz }
             adapter.submitList(sortedList)
             recyclerView.adapter = adapter
+    }
+
+    fun cancelSort(){
+        recyclerView = MAIN.findViewById(R.id.rcSerch)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        recyclerView.layoutManager = LinearLayoutManager(activity)
+        adapter = SearchAdapter()
+        adapter.submitList(listSearch)
+        recyclerView.adapter = adapter
     }
 
     fun generateEmail(firstName: String, domain: String = "mail.com"): String {

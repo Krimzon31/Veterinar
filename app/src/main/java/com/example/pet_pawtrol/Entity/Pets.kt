@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "pets")
 data class Pets(
     @PrimaryKey(autoGenerate = true)
-    val ID: Int? = null,
+    val idPet: Int? = null,
 
     @ColumnInfo(name = "nickname")
     val nickname: String,
