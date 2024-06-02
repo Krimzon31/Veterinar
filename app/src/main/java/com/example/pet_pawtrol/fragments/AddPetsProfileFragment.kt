@@ -79,8 +79,6 @@ class AddPetsProfileFragment : Fragment() {
         }
     }
 
-
-
     companion object {
         @JvmStatic
         fun newInstance() = AddPetsProfileFragment()

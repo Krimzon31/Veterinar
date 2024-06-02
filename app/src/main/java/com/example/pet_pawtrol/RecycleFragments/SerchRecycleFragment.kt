@@ -122,7 +122,6 @@ class SerchRecycleFragment : Fragment() {
                         .select("div[class=specialist-top-info]")
                         .select("a[class=prof-name specialist-name js-specialist-card-link js-item-url js-link]")
                         .text()
-                    //val phNumber = container.select("div[class=specialist]").select("div[class=z-flex z-gap--12]").select("div[class=z-flex z-flex--column z-gap--4 z-mt--12 js-link]").select("div[class=specialist-phone]").select("div[class=js-phone js-phone-box  phoneView phone-hidden]").select("a").text()
                     val email = finalGenerateEmail(name)
                     val comment = container.select("div[class=specialist]")
                         .select("div[class=specialist-photo-container]")
@@ -243,7 +242,7 @@ class SerchRecycleFragment : Fragment() {
         recyclerView.adapter = adapter
     }
 
-    fun generateEmail(firstName: String, domain: String = "mail.com"): String {
+    fun generateEmail(firstName: String, domain: String = "mail.ru"): String {
         val sanitizedFirstName = firstName.lowercase().replace(" ", "")
         return "$sanitizedFirstName@$domain"
     }

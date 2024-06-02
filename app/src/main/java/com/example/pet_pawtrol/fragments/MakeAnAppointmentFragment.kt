@@ -1,5 +1,7 @@
 package com.example.pet_pawtrol.fragments
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -50,14 +52,16 @@ class MakeAnAppointmentFragment : Fragment() {
                         getUserId()
                     )
 
+                    sendEmail(veterinarEmail, "Запись на приём", "${binding.spPets.getSelectedItem()}", getUserName(), getUserPhoneNumber(), MAIN)
+
                     Thread{
                         database.getDao().insertAppointment(appointment)
                     }.start()
                 }
             }
 
+            Toast.makeText(MAIN, "Питомец: ${binding.spPets.getSelectedItem()} записан к ветеринару: ${veterinarName.toString()}", Toast.LENGTH_SHORT).show()
 
-            Toast.makeText(MAIN, "Питомец: ${binding.spPets.getSelectedItem().toString()} записан к ветеринару: ${veterinarName.toString()}", Toast.LENGTH_SHORT).show()
         }
         binding.backSearchButton.setOnClickListener{
             MAIN.navController.navigate(R.id.action_makeAnAppointmentFragment_to_searchFragment)
@@ -119,7 +123,40 @@ class MakeAnAppointmentFragment : Fragment() {
         val user_id = mainObject.getJSONObject("user").getInt("id_user")
         return user_id
     }
-
+    fun getUserName(): String {
+        val jsonString = MAIN.pref?.getString("user", """
+                                        {
+                                            "user":{
+                                                "firstname" : "Фамилия",
+                                                "lastname" : "Имя",
+                                                "phoneNumber" : "89000000",
+                                                "email" : "user@mail.ru",
+                                                "id_user" : 1
+                                            }
+                                        }
+                                        """)!!
+        val mainObject = JSONObject(jsonString)
+        val firstname = mainObject.getJSONObject("user").getString("firstname")
+        val lastname = mainObject.getJSONObject("user").getString("lastname")
+        val name = firstname + " " + lastname
+        return name
+    }
+    fun getUserPhoneNumber(): String {
+        val jsonString = MAIN.pref?.getString("user", """
+                                        {
+                                            "user":{
+                                                "firstname" : "Фамилия",
+                                                "lastname" : "Имя",
+                                                "phoneNumber" : "89000000",
+                                                "email" : "user@mail.ru",
+                                                "id_user" : 1
+                                            }
+                                        }
+                                        """)!!
+        val mainObject = JSONObject(jsonString)
+        val phoneNumber = mainObject.getJSONObject("user").getString("phoneNumber")
+        return phoneNumber
+    }
     private fun genRecyclePets(user_id: Int): LiveData<List<PetsModel>> {
         val database = MainDb.getDb(MAIN)
         val listPet = MutableLiveData<List<PetsModel>>()
@@ -137,6 +174,25 @@ class MakeAnAppointmentFragment : Fragment() {
             listPet.value = petsList
         }
         return listPet
+    }
+
+    fun sendEmail(to: String, subject: String, petName: String, name: String, phoneNumber: String, context: Context) {
+        val emailIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "message/rfc822"
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(to))
+            putExtra(Intent.EXTRA_SUBJECT, subject)
+            putExtra(Intent.EXTRA_TEXT, "Здравствуйте, к вам на приём хотят записать питомца: $petName, " +
+                    "пожалуйста свяжитесь с хозяином: $name " +
+                    "по номеру: $phoneNumber " +
+                    "для подтверждения записи, всего доброго")
+        }
+
+        try {
+            context.startActivity(Intent.createChooser(emailIntent, "Send mail..."))
+            println("Sent message successfully....")
+        } catch (ex: android.content.ActivityNotFoundException) {
+            println("There is no email client installed.")
+        }
     }
 
     companion object {
